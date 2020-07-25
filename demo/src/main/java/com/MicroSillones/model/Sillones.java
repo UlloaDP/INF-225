@@ -6,12 +6,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+@Entity
 public class Sillones {
 	
 	//Atributos
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
-	private long id;
+	private Long ides;
 	
 	private boolean disponibilidad;
     @ManyToOne
@@ -22,7 +24,7 @@ public class Sillones {
 	public Sillones() {}
 	
 	public long getId() {
-		return id;
+		return ides;
 	}
 	
 	public boolean getDisponibilidad() {
