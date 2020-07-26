@@ -1,7 +1,6 @@
 package com.MicroSillones.model;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +13,6 @@ public class Sala {
 	//Atributos
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
-	@Column(name="id")
 	private long id;
 	
 	private int capacidad;

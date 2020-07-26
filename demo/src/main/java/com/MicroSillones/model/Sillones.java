@@ -1,8 +1,6 @@
 package com.MicroSillones.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,8 +16,8 @@ public class Sillones{
 	private long ides;
 	
 	private boolean disponibilidad;
-    @ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="id", referencedColumnName = "id", nullable=false)
+    @ManyToOne
+	@JoinColumn(name="id", nullable=false)
 	private Sala sala;
 	
 	//constructor
