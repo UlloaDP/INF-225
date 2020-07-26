@@ -36,7 +36,7 @@ public class SalaController {
 	
 	//Get Sala by Id
 	@GetMapping("/get/{id}")
-	public Sala getSalaById(@PathVariable("id" )long id) {
+	public Sala getSalaById(@PathVariable("id") long id) {
 		
 		Sala sala = (Sala) salaRepository.findById(id).orElse(null);
 		
