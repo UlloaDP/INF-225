@@ -1,24 +1,29 @@
 package com.MicroSillones.model;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+
 @Entity
 public class Sala {
 	//Atributos
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
-	private Long id;
+	@Column(name="id")
+	private long id;
 	
 	private int capacidad;
 	private boolean disponibilidad;
 	
-	@OneToMany(mappedBy="Sala")
-    private Set<Sillones> Sillones;
+	@OneToMany(mappedBy="sala")
+    private Set<Sillones> sillones;
+	
+	public Sala() {}
 	
 	public int getCapacidad() {
 		return capacidad;

@@ -1,6 +1,8 @@
 package com.MicroSillones.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -8,17 +10,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Sillones {
+public class Sillones{
 	
-	//Atributos
+	//Attributes
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
-	private Long ides;
+	private long ides;
 	
 	private boolean disponibilidad;
-    @ManyToOne
-	@JoinColumn(name="id", nullable=false)
-	private Sala Sala;
+    @ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="id", referencedColumnName = "id", nullable=false)
+	private Sala sala;
 	
 	//constructor
 	public Sillones() {}
@@ -32,7 +34,7 @@ public class Sillones {
 	}
 	
 	public Sala getSala() {
-		return Sala;
+		return sala;
 	}
 	
 	
@@ -41,6 +43,6 @@ public class Sillones {
 	}
 	
 	public void setSala(com.MicroSillones.model.Sala sal) {
-		this.Sala=sal;
+		this.sala=sal;
 	}
 }

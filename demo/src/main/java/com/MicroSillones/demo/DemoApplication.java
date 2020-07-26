@@ -9,9 +9,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan({"com.MicroSillones.request"})
-@EnableJpaRepositories("com.MicroSillones.repo")
+@EnableJpaRepositories("com.MicroSillones.repository")
 @EnableConfigurationProperties
 @EntityScan(basePackages = {"com.MicroSillones.model"})  // scan JPA entities
+@ComponentScan(basePackages = {"com.MicroSillones.controller"})
 public class DemoApplication {
 
 	public static void main(String[] args) {
