@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.MicroSillones.repository.SalaRepository;
 import com.MicroSillones.repository.SillonRepository;
+import com.MicroSillones.model.Sala;
 import com.MicroSillones.model.Sillones;
 
 @RestController
@@ -23,11 +26,20 @@ public class SillonController {
 	@Autowired
 	private SillonRepository sillonRepository;
 	
+	@Autowired
+	private SalaRepository salarepo ;
+	
 	//Add Sillones
 	@PostMapping("/add")
-	public String addSillon(@RequestBody List<Sillones> sillones) {
-		sillonRepository.saveAll(sillones);
-		return "Sillones guardados: " + sillones.size();
+	public String addSillon(@RequestParam(name = "disponibilidad") boolean dispo , @RequestParam(name = "id") int sala) {
+		//Obtengo el objeto sala por su id dada en el parámetro, pero me la entrega como optional
+		Sala salaxid=this.salarepo.findById((long) sala).orElse(null);
+		//Añado los valores a un objeto sillón creado.
+		Sillones sillonfinal= new Sillones();
+		sillonfinal.setDisponibilidad(dispo);
+		sillonfinal.setSala(salaxid);
+		sillonRepository.save(sillonfinal);
+		return "Sillon guardado con éxito: ";
 	}
 	
 	//Get Sillones
