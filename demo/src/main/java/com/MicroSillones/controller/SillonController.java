@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.MicroSillones.repository.SalaRepository;
-import com.MicroSillones.repository.SillonRepository;
-import com.MicroSillones.model.Sala;
 import com.MicroSillones.model.Sillones;
+import com.MicroSillones.service.SillonService;
 
 @RestController
 @RequestMapping("/sillon")
@@ -24,68 +22,40 @@ public class SillonController {
 	
 	
 	@Autowired
-	private SillonRepository sillonRepository;
-	
-	@Autowired
-	private SalaRepository salarepo ;
+	private SillonService sillonService;
 	
 	//Add Sillones
 	@PostMapping("/add")
 	public String addSillon(@RequestParam(name = "disponibilidad") boolean dispo , @RequestParam(name = "id") int sala) {
-		//Obtengo el objeto sala por su id dada en el parámetro, pero me la entrega como optional
-		Sala salaxid=this.salarepo.findById((long) sala).orElse(null);
-		//Añado los valores a un objeto sillón creado.
-		Sillones sillonfinal= new Sillones();
-		sillonfinal.setDisponibilidad(dispo);
-		sillonfinal.setSala(salaxid);
-		sillonRepository.save(sillonfinal);
-		return "Sillon guardado con éxito: ";
+		return this.sillonService.saveSillon(dispo, sala);
 	}
 	
 	//Get Sillones
 	@GetMapping("/all")
 	public List<Sillones> getAllSillon(){
-		return (List<Sillones>) this.sillonRepository.findAll();
+		return this.sillonService.getAll();
 	}
 	
 	//Get Sillon by Id
 	@GetMapping("/get/{id}")
-	public Sillones getSalaById(@PathVariable("id") long id) {
-		Sillones sillon = (Sillones) sillonRepository.findById(id).orElse(null);
-		
-		if(sillon==null) {
-			System.out.println("Sillon " +id+ " no encontrado" );
-			return null;
-		}
-		
-		return sillon;
+	public Sillones getSillonById(@PathVariable("id") long id) {
+		return this.sillonService.getSillonById(id);
 	}
 	//Update Sillon
 	@PutMapping("/update/{id}")
 	public String updateSillon(@PathVariable("id") long id, @RequestBody boolean new_dispo) {
-		Sillones sillonData = sillonRepository.findById(id).orElse(null);
-		
-		if(sillonData==null) return "ERROR: sillon no encontrado";
-				
-		boolean prev_dispo = sillonData.getDisponibilidad();
-		sillonData.setDisponibilidad(new_dispo);
-		sillonRepository.save(sillonData);
-		
-		return "Sillon actualizado: " + id + "\nEstado: " + prev_dispo + " --> " + new_dispo;
+		return this.sillonService.updateSillon(id, new_dispo);
 	}
 	
 	//Search by disponibilidad
 	@GetMapping("/status/{dispo}")
 	public List<Sillones> searchSillonByDisponibilidad(@PathVariable("dispo") boolean dispo){
-		return sillonRepository.searchSillonByDisponibilidad(dispo);
+		return this.sillonService.searchByDisponibilidad(dispo);
 	}
 	
 	//Delete Sillon
 	@DeleteMapping("delete/{id}")
 	public String deleteSillon(@PathVariable("id") long id) {
-		
-		sillonRepository.deleteById(id);
-		
-		return "Sillon with ID: "+id+" has been deleted";
+		return this.sillonService.deleteById(id);
 	}
 }
