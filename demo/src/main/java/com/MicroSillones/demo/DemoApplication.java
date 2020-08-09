@@ -11,7 +11,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan({"com.MicroSillones.request"})
 @EnableJpaRepositories("com.MicroSillones.repository")
 @EnableConfigurationProperties
-@EntityScan(basePackages = {"com.MicroSillones.model"})  // scan JPA entities
+@EntityScan(basePackages = {"com.MicroSillones.model"})
+@ComponentScan(basePackages = {"com.MicroSillones.service"})// scan JPA entities
 @ComponentScan(basePackages = {"com.MicroSillones.controller"})
 public class DemoApplication {
 
